@@ -36,6 +36,16 @@ schematics/      Schémas EasyEDA (carte CPU + carte COMMANDE G1000)
 docs/            Rapport technique complet (FR + EN), BOM, dépannage
 tools/           Programme de test matériel autonome + console de contrôle web
 ```
+## Firmware — basé sur MobiFlight
+
+Le firmware `ILS_NeoPixel_mega` est issu du firmware de base **MobiFlight** (version 3.1.0), sur lequel ont été ajoutés/adaptés :
+- la gestion de la barre LED ILS (LOC/GS, WS2812B)
+- le pilotage des LEDs DM13A (backlighting)
+- la gestion des boutons Master Alarm/Caution avec buzzer
+- les encodeurs rotatifs CRS/BARO et FMS (double anneau)
+- le joystick 4 axes
+
+Le firmware reste compatible avec l'écosystème MobiFlight (upload via MobiFlight Firmware Uploader / PlatformIO, `device.json` conforme au schéma MobiFlight).
 
 ## Le morceau intéressant : la logique d'extinction ILS
 
