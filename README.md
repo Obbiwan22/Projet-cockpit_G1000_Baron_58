@@ -91,8 +91,8 @@ Le boîtier a été entièrement réalisé en impression 3D, sur une imprimante 
 
 ## Remerciements
 
-Je ne suis ni électronicien ni programmeur émérite — juste un passionné. Je me suis fait aider dans ce projet par Claude (l'IA d'Anthropic), notamment pour déboguer méthodiquement les comportements les plus tordus rencontrés en cours de route.
+Je ne suis ni électronicien ni programmeur émérite — juste un passionné. Je me suis fait aider dans ce projet pour les parties electroniques et logiciel par Claude (l'IA d'Anthropic), notamment pour déboguer méthodiquement les comportements les plus tordus rencontrés en cours de route. 
 
 ## Licence
 
-*(à définir — MIT recommandé pour un projet hobbyiste partagé librement)*
+*Creative Commons Attribution — Pas d'Utilisation Commerciale 4.0 International (CC BY-NC 4.0)*
