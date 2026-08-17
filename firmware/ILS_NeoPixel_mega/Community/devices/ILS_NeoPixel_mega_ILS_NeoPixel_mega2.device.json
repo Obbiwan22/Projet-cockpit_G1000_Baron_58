@@ -1,0 +1,25 @@
+{
+    "Info": {
+      "Label": "ILS Glideslope GS",
+      "Type": "ILS_NeoPixel_mega2",
+      "Author": "francois.colas22",
+      "URL": "https://github.com",
+      "Version": "1.0.1"
+    },
+    "Config": {
+      "Pins": [
+        "DIN GS"
+      ],
+      "isI2C": false
+    },
+    "MessageTypes": [
+      {
+        "id": 1,
+        "label": "Index LED GS",
+        "description": "0=trop haut, 4=sur le plan, 8=trop bas"
+      }
+    ]
+}
+
+  
+  

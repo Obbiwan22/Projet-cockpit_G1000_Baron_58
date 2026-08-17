@@ -1,0 +1,29 @@
+{
+    "Info": {
+      "Label": "ILS Localizer LOC",
+      "Type": "ILS_NeoPixel_mega",
+      "Author": "francois.colas22",
+      "URL": "https://github.com",
+      "Version": "1.0.1"
+    },
+    "Config": {
+      "Pins": [
+        "DIN LOC"
+      ],
+      "isI2C": false
+    },
+    "MessageTypes": [
+      {
+        "id": 0,
+        "label": "Index LED LOC",
+        "description": "0=max gauche, 4=centre, 8=max droite"
+      },
+      {
+        "id": 3,
+        "label": "ILS Active (0/1)",
+        "description": "Source de verite unique pour l'extinction LOC+GS. Envoyer ILS_ACTIVE sans precondition."
+      }
+    ]
+}
+
+  

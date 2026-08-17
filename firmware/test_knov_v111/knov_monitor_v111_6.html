@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Knov V3.3 — GPIO Monitor v1.0.11</title>
+<style>
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bo:#30363d;
+  --tx:#e6edf3;--mu:#7d8590;
+  --gr:#3fb950;--grb:#0d3320;
+  --re:#f85149;--reb:#3d0f0f;
+  --am:#d29922;--amb:#2d1e00;
+  --bl:#58a6ff;--blb:#0d2244;
+  --pu:#bc8cff;--pub:#1a1030;
+  --r:5px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,sans-serif;font-size:13px;padding:10px}
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--bo)}
+.logo{background:var(--blb);border:1px solid var(--bl);color:var(--bl);font-family:monospace;font-size:11px;font-weight:700;padding:3px 8px;border-radius:var(--r)}
+.cbar{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--bo);border-radius:var(--r);padding:7px 10px;margin-bottom:10px}
+.dot{width:8px;height:8px;border-radius:50%;background:#484f58;flex-shrink:0}
+.dot.on{background:var(--gr);box-shadow:0 0 5px var(--gr)}.dot.er{background:var(--re)}
+#stxt{color:var(--mu);font-size:12px;flex:1}
+button{background:var(--bg3);border:1px solid var(--bo);color:var(--tx);border-radius:var(--r);padding:4px 10px;font-size:12px;cursor:pointer;transition:all .12s}
+button:hover{border-color:var(--bl);background:var(--blb);color:var(--bl)}
+button.pri{background:var(--blb);border-color:var(--bl);color:var(--bl);font-weight:600}
+button:disabled{opacity:.4;cursor:not-allowed}
+.prb{font-size:10px;padding:2px 7px;border-radius:3px;border:1px solid var(--bo);background:var(--bg3);color:var(--mu);cursor:pointer}
+.prb:hover{border-color:var(--am);color:var(--am);background:var(--amb)}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}}
+.card{background:var(--bg2);border:1px solid var(--bo);border-radius:var(--r);overflow:hidden}
+.ch{background:var(--bg3);border-bottom:1px solid var(--bo);padding:6px 9px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
+.ml{margin-left:auto;font-family:monospace;font-size:10px;padding:1px 5px;border-radius:8px;background:var(--bg);border:1px solid var(--bo);color:var(--mu)}
+.cb{padding:7px}
+.h3{font-size:10px;font-weight:600;color:var(--mu);padding:3px 4px 2px;text-transform:uppercase;letter-spacing:.04em}
+.h3b{font-size:10px;font-weight:600;color:var(--mu);padding:3px 4px 2px;border-top:1px solid var(--bo);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+/* LED bar */
+.lbar{display:flex;gap:3px;justify-content:center;padding:5px 3px 2px}
+.lc{width:24px;height:24px;border-radius:3px;border:1px solid var(--bo);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:var(--mu);transition:all .15s}
+.bll{display:flex;justify-content:space-between;padding:0 3px 4px;font-size:9px;color:var(--mu)}
+/* GPIO row */
+.grow{display:flex;align-items:center;gap:6px;padding:3px 4px;border-radius:3px}
+.grow:hover{background:var(--bg3)}
+.pb{font-family:monospace;font-size:10px;font-weight:600;padding:1px 5px;border-radius:3px;min-width:56px;text-align:center;border:1px solid transparent;flex-shrink:0}
+.pw{background:var(--grb);border-color:var(--gr);color:var(--gr)}
+.ps{background:var(--pub);border-color:var(--pu);color:var(--pu)}
+.pm{background:var(--amb);border-color:var(--am);color:var(--am)}
+.pi{background:var(--bg3);border-color:var(--bo);color:var(--mu)}
+.pso{background:var(--blb);border-color:var(--bl);color:var(--bl)}
+.gl{font-size:11px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ind{width:24px;height:13px;border-radius:7px;border:1px solid var(--bo);background:var(--bg);position:relative;flex-shrink:0;transition:all .15s}
+.ind::after{content:'';position:absolute;width:7px;height:7px;border-radius:50%;top:2px;left:2px;background:#484f58;transition:all .15s}
+.ind.hi{background:var(--grb);border-color:var(--gr)}.ind.hi::after{background:var(--gr);transform:translateX(11px)}
+.ind.lo{background:var(--reb);border-color:var(--re)}.ind.lo::after{background:var(--re)}
+.ind.ac{background:var(--blb);border-color:var(--bl)}.ind.ac::after{background:var(--bl);transform:translateX(11px)}
+.sv{font-family:monospace;font-size:10px;color:var(--mu);min-width:18px;text-align:right}
+.sv.hi{color:var(--gr)}.sv.lo{color:var(--re)}
+/* DM13A */
+.dmg{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;padding:4px}
+.dc{height:14px;border-radius:2px;background:var(--bg);border:1px solid var(--bo);font-size:8px;font-family:monospace;color:var(--mu);display:flex;align-items:center;justify-content:center;transition:all .12s}
+.dc.on{background:var(--amb);border-color:var(--am);color:var(--am)}
+/* Encodeur */
+.ed{display:flex;align-items:center;gap:7px;padding:5px 6px}
+.edl{width:36px;height:36px;border-radius:50%;border:2px solid var(--bo);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:13px;font-weight:700;color:var(--mu);flex-shrink:0;transition:all .2s}
+.edl.ac{border-color:var(--gr);color:var(--gr)}
+.ec{font-family:monospace;font-size:16px;font-weight:700}
+.edir{font-size:10px;color:var(--mu)}
+.esw{padding:2px 6px;border-radius:3px;border:1px solid var(--bo);font-size:10px;color:var(--mu);background:var(--bg);transition:all .12s}
+.esw.pr{background:var(--grb);border-color:var(--gr);color:var(--gr)}
+/* Boutons G1000 */
+.bg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px}
+.gb{background:var(--bg3);border:1px solid var(--bo);border-radius:3px;padding:5px 2px;text-align:center;transition:all .12s}
+.gb .bn{font-size:9px;font-weight:700;color:var(--mu);display:block}
+.gb .bc{font-family:monospace;font-size:10px;color:var(--mu);display:block;margin-top:1px}
+.gb .bp{font-size:8px;color:var(--mu);display:block;margin-top:1px}
+.gb.pr{background:var(--grb);border-color:var(--gr)}.gb.pr .bn,.gb.pr .bc{color:var(--gr)}
+/* Joystick */
+.jp{width:64px;height:64px;border-radius:50%;border:2px solid var(--bo);background:var(--bg3);position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.jd{width:12px;height:12px;border-radius:50%;background:var(--mu);position:absolute;transition:all .2s}
+.jd.ac{background:var(--bl)}
+.jcross{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:2px;flex:1}
+.jdir{background:var(--bg3);border:1px solid var(--bo);border-radius:3px;padding:3px;text-align:center;font-size:10px;font-family:monospace;color:var(--mu);transition:all .12s}
+.jdir.ac{border-color:var(--bl);color:var(--bl);background:var(--blb)}
+/* VCC */
+.vb{display:flex;align-items:center;gap:9px;padding:6px 5px}
+.vv{font-family:monospace;font-size:18px;font-weight:700;min-width:70px}
+.vp{flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.vf{height:100%;border-radius:3px;background:var(--gr);transition:width .5s,background .5s}
+/* Son */
+.snd{display:flex;align-items:center;gap:8px;padding:5px 6px}
+.sndico{width:32px;height:32px;border-radius:50%;border:2px solid var(--bo);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:all .2s}
+.sndico.on{border-color:var(--am);background:var(--amb);animation:sp .3s infinite}
+@keyframes sp{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+/* Master */
+.mcp{display:flex;gap:7px;padding:5px 6px;flex-wrap:wrap}
+.mcb{flex:1;min-width:78px;border:1px solid var(--bo);border-radius:4px;padding:6px;text-align:center;background:var(--bg);transition:all .2s}
+.mcb.cau-on{border-color:var(--am);background:var(--amb)}
+.mcb.alm-on{border-color:var(--re);background:var(--reb)}
+.mcico{font-size:18px;display:block;margin-bottom:2px}
+.mclbl{font-size:9px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.04em}
+.mcval{font-size:10px;color:var(--mu);margin-top:2px;font-family:monospace}
+.ldot{width:9px;height:9px;border-radius:50%;background:var(--bg3);border:1px solid var(--bo);display:inline-block;margin-right:3px;transition:all .2s;vertical-align:middle}
+.ldot.cau{background:var(--am);box-shadow:0 0 4px var(--am)}
+.ldot.alm{background:var(--re);box-shadow:0 0 4px var(--re)}
+/* Panels */
+.panel{background:var(--bg2);border:1px solid var(--bo);border-radius:var(--r);margin-bottom:8px;overflow:hidden}
+.ph{background:var(--bg3);border-bottom:1px solid var(--bo);padding:7px 11px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600}
+.pnb{padding:11px 13px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.slw{flex:1;min-width:160px;display:flex;flex-direction:column;gap:5px}
+.slr{display:flex;justify-content:space-between;font-size:11px;color:var(--mu)}
+.slr .v{font-family:monospace;color:var(--am);font-weight:600;font-size:13px}
+input[type=range]{-webkit-appearance:none;width:100%;height:5px;border-radius:3px;background:var(--bg3);outline:none;cursor:pointer;border:1px solid var(--bo)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--am);border:2px solid var(--bg);box-shadow:0 0 4px var(--am);cursor:pointer}
+input[type=range].lsl::-webkit-slider-thumb{background:var(--gr);box-shadow:0 0 4px var(--gr)}
+input[type=range].gsl::-webkit-slider-thumb{background:var(--bl);box-shadow:0 0 4px var(--bl)}
+.bulb{width:44px;height:44px;border-radius:50%;border:2px solid var(--bo);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:all .3s}
+.chg{display:grid;grid-template-columns:repeat(8,1fr);gap:2px}
+.ct{padding:2px;border-radius:2px;border:1px solid var(--bo);background:var(--bg3);font-size:9px;font-family:monospace;color:var(--mu);cursor:pointer;text-align:center;user-select:none;transition:all .12s}
+.ct.on{background:var(--amb);border-color:var(--am);color:var(--am)}
+/* ILS manual */
+.mb{padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.mb{grid-template-columns:1fr}}
+.ms{display:flex;flex-direction:column;gap:6px}
+.mt{font-size:11px;font-weight:600;display:flex;align-items:center;gap:5px}
+.ib{font-family:monospace;font-size:13px;font-weight:700;min-width:26px;text-align:center;padding:2px 5px;border-radius:3px;border:1px solid var(--bo);background:var(--bg3);transition:all .12s}
+.ib.c{border-color:var(--gr);color:var(--gr);background:var(--grb)}
+.ib.d{border-color:var(--am);color:var(--am);background:var(--amb)}
+.ib.m{border-color:var(--re);color:var(--re);background:var(--reb)}
+.mnb{display:flex;gap:2px;justify-content:center}
+.mc{width:19px;height:19px;border-radius:2px;border:1px solid var(--bo);background:var(--bg3);font-size:8px;font-family:monospace;color:var(--mu);display:flex;align-items:center;justify-content:center;transition:all .12s}
+.qbs{display:flex;gap:3px;flex-wrap:wrap}
+.qb{font-size:10px;padding:2px 6px;border-radius:3px;border:1px solid var(--bo);background:var(--bg3);color:var(--mu);cursor:pointer;font-family:monospace;transition:all .12s}
+.qb:hover,.qb.ac{border-color:var(--gr);color:var(--gr);background:var(--grb)}
+.dvb{background:var(--bg3);border:1px solid var(--bo);border-radius:3px;padding:4px 7px;font-size:11px}
+.stog{display:flex;align-items:center;gap:6px;padding:3px 7px;border-radius:3px;border:1px solid var(--bo);background:var(--bg3);cursor:pointer;font-size:11px;color:var(--mu);user-select:none;transition:all .12s}
+.stog.ac{border-color:var(--bl);background:var(--blb);color:var(--bl)}
+.td{width:22px;height:12px;border-radius:6px;background:var(--bg);border:1px solid var(--bo);position:relative;flex-shrink:0}
+.td::after{content:'';position:absolute;width:6px;height:6px;border-radius:50%;top:2px;left:2px;background:var(--mu);transition:all .12s}
+.stog.ac .td{background:var(--blb);border-color:var(--bl)}.stog.ac .td::after{background:var(--bl);transform:translateX(10px)}
+/* Console */
+.con{background:var(--bg2);border:1px solid var(--bo);border-radius:var(--r);overflow:hidden}
+.conh{background:var(--bg3);border-bottom:1px solid var(--bo);padding:5px 9px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:600}
+#lo{height:110px;overflow-y:auto;padding:5px;font-family:monospace;font-size:11px;line-height:1.5}
+.lok{color:var(--gr)}.lwn{color:var(--am)}.lfl,.ler{color:var(--re)}.lin{color:var(--bl)}.lnf{color:var(--mu)}.lts{color:#484f58;margin-right:4px}
+.tbar{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.pb3{background:var(--amb);border:1px solid var(--am);color:var(--am);font-size:11px;font-weight:600;padding:3px 8px;border-radius:var(--r);font-family:monospace}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:9px">
+    <span class="logo">KNOV V3.3</span>
+    <div>
+      <div style="font-size:14px;font-weight:600">Moniteur GPIO — G1000 Baron 58</div>
+      <div style="font-size:11px;color:var(--mu)">Mega 2560 Pro Mini · v1.0.11 · WebSerial</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:6px;align-items:center">
+    <span id="pbg" class="pb3">DÉCO</span>
+    <button class="pri" id="bc" onclick="conn()">Connecter</button>
+    <button id="bn" onclick="sc('n\n')" disabled>Suivant →</button>
+  </div>
+</div>
+
+<div class="cbar">
+  <div class="dot" id="dot"></div>
+  <span id="stxt">Cliquer "Connecter" — Chrome/Edge requis (WebSerial)</span>
+  <button onclick="clrLog()" style="margin-left:auto">Effacer</button>
+</div>
+
+<div class="grid">
+
+  <!-- LOC -->
+  <div class="card">
+    <div class="ch">💡 WS2812B LOC <span class="ml" id="ls">ÉTEINT</span></div>
+    <div class="cb">
+      <div class="lbar" id="ll"></div>
+      <div class="bll"><span>← Gauche</span><span>CENTRE[4]</span><span>Droite →</span></div>
+      <div class="grow"><span class="pb pw">D7/GPIO7</span><span class="gl">LOC DIN — CN3</span><div class="ind" id="id7"></div><span class="sv" id="vd7">—</span></div>
+    </div>
+  </div>
+
+  <!-- GS -->
+  <div class="card">
+    <div class="ch">💡 WS2812B GS <span class="ml" id="gs">ÉTEINT</span></div>
+    <div class="cb">
+      <div class="lbar" id="lg"></div>
+      <div class="bll"><span>↑ Haut</span><span>SUR PLAN[4]</span><span>Bas ↓</span></div>
+      <div class="grow"><span class="pb pw">D6/GPIO6</span><span class="gl">GS DIN — CN3</span><div class="ind" id="id6"></div><span class="sv" id="vd6">—</span></div>
+    </div>
+  </div>
+
+  <!-- DM13A -->
+  <div class="card">
+    <div class="ch">🔆 DM13A SPI <span class="ml" id="dmc">0/32</span></div>
+    <div class="cb">
+      <div class="dmg" id="dmg"></div>
+      <div class="grow"><span class="pb ps">SS  D53/G53</span><span class="gl">Chip select CN5</span><div class="ind" id="iss"></div></div>
+      <div class="grow"><span class="pb ps">LAT D49</span><span class="gl">Latch enable (libre)</span><div class="ind" id="ilat"></div></div>
+      <div class="grow"><span class="pb ps">SCK D52/G52</span><span class="gl">SPI hardware</span><div class="ind" id="isk"></div></div>
+      <div class="grow"><span class="pb ps">MOSI D51/G51</span><span class="gl">SPI hardware</span><div class="ind" id="imo"></div></div>
+      <div class="grow"><span class="pb pi">+5V</span><span class="gl">VDD +5V master + slave ✓</span></div>
+      <div class="grow"><span class="pb pm">EN# D5/G5</span><span class="gl">GPIO5 → master + slave reliés ✓</span>
+        <div style="flex:1;height:4px;background:var(--bg3);border-radius:2px;margin:0 5px;overflow:hidden"><div id="oef" style="height:100%;width:0;background:var(--am);border-radius:2px;transition:width .3s"></div></div>
+        <span class="sv" id="voe">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Encodeurs -->
+  <div class="card">
+    <div class="ch">🎛️ Encodeurs EC11</div>
+    <div class="cb">
+      <div class="h3">FMS — A1:D16/G16 A2:D17/G17 B1:D20/G20 B2:D21/G21 SW:D8/G8</div>
+      <div class="ed">
+        <div class="edl" id="fd">0</div>
+        <div style="flex:1"><div class="ec" id="fc">0</div><div class="edir" id="fdr">attente...</div></div>
+        <div class="esw" id="fsw">SW</div>
+      </div>
+      <div style="display:flex;gap:2px;padding:0 4px 2px">
+        <div class="grow" style="flex:1;padding:2px"><span class="pb pi">A1 D16/G16</span><div class="ind" id="ifa"></div><span class="sv" id="vfa">—</span></div>
+        <div class="grow" style="flex:1;padding:2px"><span class="pb pi">B1 D20/G20</span><div class="ind" id="ifb"></div><span class="sv" id="vfb">—</span></div>
+      </div>
+      <div class="h3b">CRS — A1:D24/G24 A2:D25/G25 B1:D22/G22 B2:D23/G23 SW:D11/G11</div>
+      <div class="ed">
+        <div class="edl" id="cd">0</div>
+        <div style="flex:1"><div class="ec" id="cc">0</div><div class="edir" id="cdr">attente...</div></div>
+        <div class="esw" id="csw">SW</div>
+      </div>
+      <div style="display:flex;gap:2px;padding:0 4px 3px">
+        <div class="grow" style="flex:1;padding:2px"><span class="pb pi">A1 D24/G24</span><div class="ind" id="ica"></div><span class="sv" id="vca">—</span></div>
+        <div class="grow" style="flex:1;padding:2px"><span class="pb pi">B1 D22/G22</span><div class="ind" id="icb"></div><span class="sv" id="vcb">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boutons G1000 -->
+  <div class="card">
+    <div class="ch">🔘 Boutons G1000 <span class="ml" id="btt">0</span></div>
+    <div class="cb">
+      <div class="bg">
+        <div class="gb" id="bf"><span class="bn">FPL</span><span class="bc" id="cf">0</span><span class="bp">D32/G31</span></div>
+        <div class="gb" id="bpr"><span class="bn">PROC</span><span class="bc" id="cp">0</span><span class="bp">D35/G32</span></div>
+        <div class="gb" id="bcl"><span class="bn">CLR</span><span class="bc" id="ccl">0</span><span class="bp">D31/G30</span></div>
+        <div class="gb" id="bm"><span class="bn">MENU</span><span class="bc" id="cm">0</span><span class="bp">D34/G35</span></div>
+        <div class="gb" id="be"><span class="bn">ENT</span><span class="bc" id="ce">0</span><span class="bp">D30/G34</span></div>
+        <div class="gb" id="bd"><span class="bn">DIRECT</span><span class="bc" id="cd2">0</span><span class="bp">D33/G33</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Joystick + VCC + Son + Master -->
+  <div class="card">
+    <div class="ch">🕹️ Joystick · Son · Master · VCC</div>
+    <div class="cb">
+      <div class="h3">RKJXT1 — UP:D26 L:D27 D:D28 R:D29 PUSH:D15 ROT:D18/D19</div>
+      <div style="display:flex;gap:8px;padding:5px 4px;align-items:center">
+        <div class="jp"><div class="jd" id="jd"></div></div>
+        <div class="jcross">
+          <div></div>
+          <div class="jdir" id="jup">↑ D26</div>
+          <div></div>
+          <div class="jdir" id="jle">← D27</div>
+          <div style="display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--mu)">PSH</div>
+          <div class="jdir" id="jri">D29 →</div>
+          <div></div>
+          <div class="jdir" id="jdo">↓ D28</div>
+          <div></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:4px;padding:2px 4px 3px">
+        <div class="grow" style="flex:1;padding:2px"><span class="pb pi">D15/G15</span><span class="gl">PUSH</span><div class="ind" id="ipu"></div></div>
+        <div class="grow" style="flex:1;padding:2px"><span class="pb pso">D18/G18</span><span class="gl">ROT ←</span><div class="ind" id="irl"></div></div>
+        <div class="grow" style="flex:1;padding:2px"><span class="pb pso">D19/G19</span><span class="gl">ROT →</span><div class="ind" id="irr"></div></div>
+      </div>
+
+      <div class="h3b">Son NE555 — D43/GPIO43</div>
+      <div class="snd">
+        <div class="sndico" id="sndico">🔊</div>
+        <div style="flex:1"><div style="font-size:11px" id="sndst">Silence</div><div style="font-size:10px;color:var(--mu)" id="sndct">0 bips</div></div>
+        <button class="prb" onclick="sc('SND:BIP=1\n')">1 bip</button>
+        <button class="prb" onclick="sc('SND:BIP=3\n')" style="margin-left:3px">3 bips</button>
+      </div>
+
+      <div class="h3b">Master Caution/Alarm</div>
+      <div class="mcp">
+        <div class="mcb" id="box-cau">
+          <span class="mcico">⚠️</span>
+          <div class="mclbl">Caution</div>
+          <div class="mcval"><span class="ldot" id="ldcau"></span>LED D39</div>
+          <div style="font-size:9px;color:var(--mu)">BTN D38/G38</div>
+        </div>
+        <div class="mcb" id="box-alm">
+          <span class="mcico">🔔</span>
+          <div class="mclbl">Alarm</div>
+          <div class="mcval"><span class="ldot" id="ldalm"></span>LED D37</div>
+          <div style="font-size:9px;color:var(--mu)">BTN D36/G36</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:3px;padding:3px 6px 2px;flex-wrap:wrap">
+        <button class="prb" onclick="sc('LED:CAUTION=1\n')">CAU ON</button>
+        <button class="prb" onclick="sc('LED:CAUTION=0\n')">CAU OFF</button>
+        <button class="prb" onclick="sc('LED:ALARM=1\n')">ALM ON</button>
+        <button class="prb" onclick="sc('LED:ALARM=0\n')">ALM OFF</button>
+      </div>
+
+      <div class="h3b">VCC</div>
+      <div class="vb">
+        <div class="vv" id="vv">—</div>
+        <div style="flex:1"><div class="vp"><div class="vf" id="vfi"></div></div><div style="font-size:10px;color:var(--mu);margin-top:2px" id="vl">En attente</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+
+<!-- RÉTRO-ÉCLAIRAGE -->
+<div class="panel">
+  <div class="ph">🔆 Rétro-éclairage DM13A — EN# D5/GPIO5 · master + slave · SimVar MSFS
+    <span id="blbg" style="margin-left:auto;font-size:10px;padding:1px 6px;border-radius:8px;background:var(--bg);border:1px solid var(--bo);color:var(--mu)">MANUEL</span>
+  </div>
+  <div class="pnb">
+    <div class="bulb" id="blb">💡</div>
+    <div class="slw">
+      <div style="font-size:10px;color:var(--mu);margin-bottom:4px;padding:3px 0">EN# D5 → master + slave simultané · SimVar MSFS → <code style="color:var(--am)">BL:OE=0..255</code></div>
+      <div class="slr"><span>Luminosité OE D5 — master + slave</span><span class="v" id="blp">0%</span></div>
+      <input type="range" id="bls" min="0" max="255" value="0" oninput="onBL(this.value)">
+      <div style="display:flex;gap:4px;margin-top:3px;flex-wrap:wrap;align-items:center">
+        <span style="font-size:10px;color:var(--mu)">Presets:</span>
+        <button class="prb" onclick="sBL(0)">OFF</button>
+        <button class="prb" onclick="sBL(64)">25%</button>
+        <button class="prb" onclick="sBL(128)">50%</button>
+        <button class="prb" onclick="sBL(192)">75%</button>
+        <button class="prb" onclick="sBL(255)">MAX</button>
+        <button class="prb" id="blfb" onclick="togFade()">🔄 Fade</button>
+      </div>
+    </div>
+    <div style="flex:1;min-width:180px">
+      <div style="font-size:10px;color:var(--mu);font-weight:600;margin-bottom:3px">32 canaux (clic=toggle)</div>
+      <div class="chg" id="cg"></div>
+      <div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap">
+        <button class="prb" onclick="aCh(1)">Tous ON</button>
+        <button class="prb" onclick="aCh(0)">Tous OFF</button>
+        <button class="prb" onclick="pCh(0)">Pairs</button>
+        <button class="prb" onclick="pCh(1)">Impairs</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMANDES ILS -->
+<div class="panel">
+  <div class="ph">🎯 Commandes manuelles ILS — LOC D7 · GS D6
+    <div style="margin-left:auto;display:flex;gap:6px">
+      <div class="stog" id="swt" onclick="togSw()"><div class="td"></div><span>Sweep</span></div>
+      <button onclick="rILS()" style="font-size:11px;padding:2px 8px">↺ Reset</button>
+    </div>
+  </div>
+  <div class="mb">
+    <div class="ms">
+      <div class="mt"><span style="color:var(--gr)">━━</span> LOC <span class="ib c" id="lbg">4</span></div>
+      <div class="mnb" id="ml"></div>
+      <div style="display:flex;align-items:center;gap:7px">
+        <span style="font-size:10px;color:var(--mu)">←G</span>
+        <input type="range" class="lsl" id="lsl" min="0" max="8" value="4" oninput="sL(this.value)" style="flex:1">
+        <span style="font-size:10px;color:var(--mu)">D→</span>
+      </div>
+      <div class="qbs" id="lbs"></div>
+      <div class="dvb"><span style="color:var(--mu)">Dév: </span><span id="ldv" style="color:var(--gr);font-weight:600">SUR L'AXE</span><span style="color:var(--mu);margin-left:6px">idx </span><span id="lix" style="font-family:monospace;color:var(--gr)">4</span></div>
+    </div>
+    <div class="ms">
+      <div class="mt"><span style="color:var(--bl)">┃┃</span> GS <span class="ib c" id="gbg">4</span></div>
+      <div class="mnb" id="mg"></div>
+      <div style="display:flex;align-items:center;gap:7px">
+        <span style="font-size:10px;color:var(--mu)">↑H</span>
+        <input type="range" class="gsl" id="gsl" min="0" max="8" value="4" oninput="sG(this.value)" style="flex:1">
+        <span style="font-size:10px;color:var(--mu)">B↓</span>
+      </div>
+      <div class="qbs" id="gbs"></div>
+      <div class="dvb"><span style="color:var(--mu)">Dév: </span><span id="gdv" style="color:var(--bl);font-weight:600">SUR LE PLAN</span><span style="color:var(--mu);margin-left:6px">idx </span><span id="gix" style="font-family:monospace;color:var(--bl)">4</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONSOLE -->
+<div class="con">
+  <div class="conh"><span>📋 Log série</span><span id="lc" style="font-size:10px;color:var(--mu)">0</span></div>
+  <div id="lo"></div>
+</div>
+<div class="tbar">
+  <button onclick="demo()">▶ Démo</button>
+  <button onclick="sc('n\n')">Envoyer 'n'</button>
+  <button onclick="sc('SND:BIP=1\n')">🔊 Bip</button>
+  <button onclick="expLog()">⬇ Export</button>
+</div>
+
+<script>
+var PAL=['#f85149','#d05538','#c07030','#a09020','#3fb950','#a09020','#c07030','#d05538','#f85149'];
+var LLBL=['MAX←','←←','←','〈','CTR','〉','→','→→','MAX→'];
+var GLBL=['MAX↑','↑↑','↑','〈','PLN','〉','↓','↓↓','MAX↓'];
+var LDEV=['Dév max G','Gauche fort','Gauche moy','Gauche faib',"SUR L'AXE",'Droite faib','Droite moy','Droite fort','Dév max D'];
+var GDEV=['Trop haut+','Trop haut','Haut moy','Haut faib','SUR LE PLAN','Bas faib','Bas moy','Trop bas','Trop bas+'];
+
+var S={co:false,port:null,rd:null,wr:null,buf:'',fc:0,cc:0,bipC:0,rotC:0,
+  bc:{f:0,pr:0,cl:0,m:0,e:0,d:0},ch:new Array(32).fill(0),
+  ft:null,fv:0,fd:1,st:null,ss:0,li:4,gi:4,ln:0,dt:null};
+
+function g(id){return document.getElementById(id);}
+function ind(id,c){var e=g(id);if(e)e.className='ind '+(c||'');}
+function sv2(id,t,c){var e=g(id);if(e){e.textContent=t;e.className='sv '+(c||'');}}
+
+function lBar(id,idx,se,st){
+  for(var i=0;i<9;i++){var c=g(id+i);if(!c)continue;if(idx!==null&&i===idx){c.style.background=PAL[i];c.style.borderColor=PAL[i];c.style.color='#fff';c.style.boxShadow='0 0 4px '+PAL[i];}else c.style.cssText='';}
+  if(se){var e=g(se);if(e)e.textContent=st||'—';}
+}
+function mBar(id,idx){for(var i=0;i<9;i++){var c=g(id+i);if(!c)continue;if(i===idx){c.style.background=PAL[i];c.style.borderColor=PAL[i];c.style.color='#fff';}else c.style.cssText='';}}
+function dmU(m){var on=0;for(var i=0;i<32;i++){var a=!!(m&(1<<i));var c=g('dm'+i);if(c){c.className='dc'+(a?' on':'');if(a)on++;}}var e=g('dmc');if(e)e.textContent=on+'/32';}
+function oeU(p){var f=g('oef');if(f)f.style.width=p+'%';sv2('voe',Math.round(p)+'%');}
+function setPhase(p){var e=g('pbg');if(!e)return;e.textContent=p;if(p.includes('PASSE')||p.includes('OK'))e.style.cssText='background:var(--grb);border-color:var(--gr);color:var(--gr)';else if(p.includes('FAIL')||p.includes('ECHEC'))e.style.cssText='background:var(--reb);border-color:var(--re);color:var(--re)';else e.style.cssText='';}
+
+function addLog(l){
+  var o=g('lo');if(!o)return;
+  var ts=new Date().toLocaleTimeString('fr',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  var d=document.createElement('div');
+  var cl='lnf';
+  if(l.startsWith('[OK]'))cl='lok';else if(l.startsWith('[WARN]'))cl='lwn';else if(l.startsWith('[FAIL]')||l.startsWith('[ERROR]'))cl='lfl';else if(l.startsWith('[INPUT]')||l.startsWith('[CMD]'))cl='lin';
+  d.innerHTML='<span class="lts">'+ts+'</span><span class="'+cl+'">'+l.replace(/</g,'&lt;')+'</span>';
+  o.appendChild(d);o.scrollTop=o.scrollHeight;S.ln++;var c=g('lc');if(c)c.textContent=S.ln;
+}
+function clrLog(){var o=g('lo');if(o)o.innerHTML='';S.ln=0;var c=g('lc');if(c)c.textContent='0';}
+
+function parseLine(l){
+  l=l.trim();if(!l)return;addLog(l);
+  if(l.startsWith('GPIO:'))return gpioU(l.slice(5));
+  if(l.startsWith('[INPUT]'))return inpEv(l.slice(8).trim());
+  var vm=l.match(/VCC = (\d+) mV/);if(vm)return vccU(parseInt(vm[1]));
+  if(l.includes('PHASE 1'))setPhase('P1 AUTO');
+  if(l.includes('PHASE 2'))setPhase('P2 INTERACTIF');
+  if(l.includes('TOUS PASSES'))setPhase('✓ PASSE');
+  if(l.includes('ECHECS'))setPhase('✗ ECHEC');
+  var dm=l.match(/DM13A:MASK=0x([0-9A-Fa-f]+)/);if(dm)dmU(parseInt(dm[1],16));
+  var oe=l.match(/OE:PCT=(\d+)/);if(oe)oeU(parseInt(oe[1]));
+  var lm=l.match(/^LOC:IDX=(\d+)/);if(lm){var i=parseInt(lm[1]);lBar('ll',i,'ls','LED '+i);ind('id7','ac');sv2('vd7','TX','hi');}
+  var gm=l.match(/^GS:IDX=(\d+)/);if(gm){var i=parseInt(gm[1]);lBar('lg',i,'gs','LED '+i);ind('id6','ac');sv2('vd6','TX','hi');}
+}
+
+function gpioU(kv){
+  var p=kv.split('=');if(p.length!==2)return;
+  var pin=p[0].toUpperCase(),h=(p[1].trim()==='1'||p[1].trim()==='HIGH'),c=h?'hi':'lo';
+  var m={'FMS_A':['ifa','vfa'],'FMS_B':['ifb','vfb'],'CRS_A':['ica','vca'],'CRS_B':['icb','vcb'],'PUSH':['ipu',null],'ALARM_SW':['ialm',null],'BTN_CAUTION':['icau',null]};
+  if(m[pin]){ind(m[pin][0],c);if(m[pin][1])sv2(m[pin][1],h?'H':'L',c);}
+  if(pin==='LED_CAUTION'){var d=g('ldcau'),b=g('box-cau');if(d)d.className='ldot'+(h?' cau':'');if(b)b.className='mcb'+(h?' cau-on':'');}
+  if(pin==='LED_ALARM'){var d=g('ldalm'),b=g('box-alm');if(d)d.className='ldot'+(h?' alm':'');if(b)b.className='mcb'+(h?' alm-on':'');}
+  if(pin==='SOUND'){
+    var ico=g('sndico'),st=g('sndst');
+    if(h){S.bipC++;if(ico)ico.className='sndico on';if(st)st.textContent='BIP ACTIF';}
+    else{if(ico)ico.className='sndico';if(st)st.textContent='Silence';}
+    var ct=g('sndct');if(ct)ct.textContent=Math.ceil(S.bipC/2)+' bips';
+  }
+}
+
+function inpEv(ev){
+  var fm=ev.match(/ENC FMS\s+A1=(\d)\s+A2=(\d)\s+B1=(\d)\s+B2=(\d)\s+dir=(\S+)\s+cnt=(\d+)/);
+  if(fm){S.fc=parseInt(fm[6]);encU('f',S.fc,fm[5],false);ind('ifa',fm[1]==='0'?'lo':'hi');}
+  if(ev.includes('ENC FMS SW PRESSE'))encU('f',S.fc,'PRESSE',true);
+  if(ev.includes('ENC FMS SW relache'))encU('f',S.fc,'',false);
+  var cm=ev.match(/ENC CRS\s+A1=(\d)\s+A2=(\d)\s+B1=(\d)\s+B2=(\d)\s+dir=(\S+)\s+cnt=(\d+)/);
+  if(cm){S.cc=parseInt(cm[6]);encU('c',S.cc,cm[5],false);ind('ica',cm[1]==='0'?'lo':'hi');}
+  if(ev.includes('ENC CRS SW PRESSE'))encU('c',S.cc,'PRESSE',true);
+  if(ev.includes('ENC CRS SW relache'))encU('c',S.cc,'',false);
+  if(ev.includes('BTN MASTER_CAUTION PRESSE')){var b=g('box-cau'),d=g('ldcau');if(b)b.className='mcb cau-on';if(d)d.className='ldot cau';}
+  if(ev.includes('BTN MASTER_CAUTION relache')){var b=g('box-cau'),d=g('ldcau');if(b)b.className='mcb';if(d)d.className='ldot';}
+  if(ev.includes('BTN MASTER_ALARM ACTIVE')){var b=g('box-alm'),d=g('ldalm');if(b)b.className='mcb alm-on';if(d)d.className='ldot alm';}
+  if(ev.includes('BTN MASTER_ALARM relache')){var b=g('box-alm'),d=g('ldalm');if(b)b.className='mcb';if(d)d.className='ldot';}
+  var bm={FPL:'f',PROC:'pr',CLR:'cl',MENU:'m',ENT:'e',DIRECT:'d'};
+  for(var k in bm){var x=ev.match(new RegExp('BTN '+k+' PRESSE #(\\d+)'));if(x){var v=bm[k];S.bc[v]=parseInt(x[1]);btnU(v,true,S.bc[v]);(function(vv){setTimeout(function(){btnU(vv,false,S.bc[vv]);},200);})(v);}}
+  var dirs={UP:'jup',LEFT:'jle',DOWN:'jdo',RIGHT:'jri'};
+  for(var k in dirs){
+    if(ev.includes('JOY '+k+' actif')){var e=g(dirs[k]);if(e)e.className='jdir ac';jDot(k);}
+    if(ev.includes('JOY '+k+' relache')){var e=g(dirs[k]);if(e)e.className='jdir';jDot('');}
+  }
+  if(ev.includes('JOY PUSH actif')){ind('ipu','lo');}
+  if(ev.includes('JOY PUSH relache')){ind('ipu','');}
+  var rot=ev.match(/ROTATE\s+L=(\d)\s+R=(\d)\s+dir=(\S+)\s+cnt=(\d+)/);
+  if(rot){S.rotC=parseInt(rot[4]);var rl=g('irl'),rr=g('irr');if(rl)rl.className='ind '+(rot[1]==='0'?'lo':'');if(rr)rr.className='ind '+(rot[2]==='0'?'lo':'');}
+}
+
+function encU(id,count,dir,sw){var d=g(id+'d'),c=g(id+'c'),dr=g(id+'dr'),s=g(id+'sw');if(d){d.textContent=count%100;d.className='edl'+(sw?' ac':'');}if(c)c.textContent=count;if(dr)dr.textContent=dir||'attente...';if(s)s.className='esw'+(sw?' pr':'');}
+
+function btnU(n,pr,cnt){
+  var nm={f:'bf',pr:'bpr',cl:'bcl',m:'bm',e:'be',d:'bd'};
+  var nm2={f:'cf',pr:'cp',cl:'ccl',m:'cm',e:'ce',d:'cd2'};
+  var e=g(nm[n]),c=g(nm2[n]);if(e)e.className='gb'+(pr?' pr':'');if(c)c.textContent=cnt;
+  var tot=0;for(var k in S.bc)tot+=S.bc[k];var t=g('btt');if(t)t.textContent=tot;
+}
+
+function vccU(mv){var v=g('vv'),f=g('vfi'),l=g('vl');if(v)v.textContent=mv+' mV';var p=Math.min(100,Math.max(0,(mv-4000)/1500*100));if(f)f.style.width=p+'%';var col='#3fb950',lb='Nominal';if(mv<4700){col='#d29922';lb='Chute USB';}if(mv<4500){col='#f85149';lb='Tension basse!';}if(f)f.style.background=col;if(l){l.textContent=lb;l.style.color=col;}}
+
+function jDot(dir){
+  var d=g('jd');if(!d)return;
+  var m={UP:[0,-16],LEFT:[-16,0],DOWN:[0,16],RIGHT:[16,0]};
+  if(dir&&m[dir]){d.style.transform='translate('+m[dir][0]+'px,'+m[dir][1]+'px)';d.className='jd ac';}
+  else{d.style.transform='';d.className='jd';}
+}
+
+/* Rétro-éclairage */
+function onBL(val){val=parseInt(val);var p=Math.round(val/255*100);var l=g('blp');if(l)l.textContent=p+'%';var s=g('bls');if(s)s.style.background='linear-gradient(to right,var(--am) '+p+'%,var(--bg3) '+p+'%)';var b=g('blb');if(b){var k=val/255;b.style.boxShadow=k>.05?'0 0 '+(0|k*26)+'px rgba(210,153,34,'+k+')':'none';b.style.background=k>.05?'rgba(45,30,0,'+(k*.8)+')':'var(--bg3)';b.style.borderColor=k>.05?'rgba(210,153,34,'+k+')':'var(--bo)';}oeU(p);sc('BL:OE='+val+'\n');}
+function sBL(v){var s=g('bls');if(s){s.value=v;onBL(v);}}
+function togFade(){if(S.ft){clearInterval(S.ft);S.ft=null;g('blfb').textContent='🔄 Fade';g('blbg').textContent='MANUEL';return;}g('blfb').textContent='⏹ Stop';g('blbg').textContent='FADE AUTO';S.fv=0;S.fd=1;S.ft=setInterval(function(){S.fv+=S.fd*4;if(S.fv>=255){S.fv=255;S.fd=-1;}if(S.fv<=0){S.fv=0;S.fd=1;}sBL(S.fv);},20);}
+function togCh(i){S.ch[i]=S.ch[i]?0:1;var e=g('ch'+i);if(e)e.className='ct'+(S.ch[i]?' on':'');var m=0;for(var j=0;j<32;j++)if(S.ch[j])m|=(1<<j);sc('BL:DM13A=0x'+(m>>>0).toString(16).toUpperCase().padStart(8,'0')+'\n');dmU(m);}
+function aCh(on){for(var i=0;i<32;i++){S.ch[i]=on?1:0;var e=g('ch'+i);if(e)e.className='ct'+(on?' on':'');}var m=on?0xFFFFFFFF:0;sc('BL:DM13A=0x'+(m>>>0).toString(16).toUpperCase().padStart(8,'0')+'\n');dmU(m);}
+function pCh(t){for(var i=0;i<32;i++){S.ch[i]=(t===0)?(i%2===0?1:0):(i%2===1?1:0);var e=g('ch'+i);if(e)e.className='ct'+(S.ch[i]?' on':'');}var m=0;for(var j=0;j<32;j++)if(S.ch[j])m|=(1<<j);sc('BL:DM13A=0x'+(m>>>0).toString(16).toUpperCase().padStart(8,'0')+'\n');dmU(m);}
+
+/* LOC / GS */
+function sL(idx){idx=Math.max(0,Math.min(8,parseInt(idx)));S.li=idx;var s=g('lsl');if(s)s.value=idx;mBar('ml',idx);lBar('ll',idx,'ls','LED '+idx);ind('id7','ac');sv2('vd7','TX','hi');var b=g('lbg');if(b){b.textContent=idx;b.className='ib '+(idx===4?'c':(idx<=1||idx>=7)?'m':'d');}var dv=g('ldv');if(dv){dv.textContent=LDEV[idx];dv.style.color=PAL[idx];}var ix=g('lix');if(ix)ix.textContent=idx;document.querySelectorAll('#lbs .qb').forEach(function(b2,i){b2.className='qb'+(i===idx?' ac':'');});sc('LOC:IDX='+idx+'\n');}
+function sG(idx){idx=Math.max(0,Math.min(8,parseInt(idx)));S.gi=idx;var s=g('gsl');if(s)s.value=idx;mBar('mg',idx);lBar('lg',idx,'gs','LED '+idx);ind('id6','ac');sv2('vd6','TX','hi');var b=g('gbg');if(b){b.textContent=idx;b.className='ib '+(idx===4?'c':(idx<=1||idx>=7)?'m':'d');}var dv=g('gdv');if(dv){dv.textContent=GDEV[idx];dv.style.color=(idx===4)?'var(--bl)':PAL[idx];}var ix=g('gix');if(ix)ix.textContent=idx;document.querySelectorAll('#gbs .qb').forEach(function(b2,i){b2.className='qb'+(i===idx?' ac':'');});sc('GS:IDX='+idx+'\n');}
+function rILS(){sL(4);sG(4);addLog('[MANUAL] Reset ILS centre');}
+function togSw(){var t=g('swt');if(S.st){clearInterval(S.st);S.st=null;if(t)t.className='stog';addLog('[MANUAL] Sweep stop');return;}if(t)t.className='stog ac';addLog('[MANUAL] Sweep start');var seq=[4,3,2,1,0,1,2,3,4,5,6,7,8,7,6,5,4];S.ss=0;S.st=setInterval(function(){var i=seq[S.ss%seq.length];sL(i);sG(8-i);S.ss++;},280);}
+
+/* WebSerial */
+function sc(msg){if(S.wr)S.wr.write(msg).catch(function(e){addLog('[ERROR] '+e.message);});}
+async function conn(){
+  if(!('serial' in navigator)){alert('WebSerial non supporté.\nUtiliser Chrome ou Edge.');return;}
+  try{S.port=await navigator.serial.requestPort();await S.port.open({baudRate:115200});S.co=true;g('dot').className='dot on';g('stxt').textContent='Connecté — Mega 2560 Pro Mini — 115200 baud';g('bc').textContent='Déconnecter';g('bc').onclick=disco;g('bn').disabled=false;setPhase('P1 AUTO');var enc=new TextEncoderStream();enc.readable.pipeTo(S.port.writable);S.wr=enc.writable.getWriter();var dec=new TextDecoderStream();S.port.readable.pipeTo(dec.writable);S.rd=dec.readable.getReader();rLoop();addLog('[INFO] Connecté');}
+  catch(e){g('dot').className='dot er';g('stxt').textContent='Erreur : '+e.message;addLog('[ERROR] '+e.message);}
+}
+async function rLoop(){try{while(true){var r=await S.rd.read();if(r.done)break;S.buf+=r.value;var ls=S.buf.split('\n');S.buf=ls.pop();ls.forEach(parseLine);}}catch(e){if(S.co){addLog('[ERROR] '+e.message);disco();}}}
+async function disco(){S.co=false;try{if(S.rd){await S.rd.cancel();S.rd=null;}if(S.wr){await S.wr.close();S.wr=null;}if(S.port){await S.port.close();S.port=null;}}catch{}g('dot').className='dot';g('stxt').textContent='Déconnecté';g('bc').textContent='Connecter';g('bc').onclick=conn;g('bn').disabled=true;setPhase('DÉCO');}
+
+/* Démo */
+function demo(){
+  if(S.dt){clearInterval(S.dt);S.dt=null;return;}
+  addLog('[INFO] Démo');setPhase('P1 AUTO');g('dot').className='dot on';g('stxt').textContent='Mode démo';
+  var step=0;
+  var seq=[
+    function(){vccU(4987);addLog('[OK]   VCC=4987mV');},
+    function(){sL(4);ind('id7','ac');},function(){sL(1);},function(){sL(7);},function(){sL(4);addLog('[WARN] LOC D7 OK?');},
+    function(){sG(4);ind('id6','ac');},function(){sG(2);},function(){sG(6);},function(){sG(4);addLog('[WARN] GS D6 OK?');},
+    function(){dmU(0xAAAAAAAA);oeU(60);addLog('[WARN] DM13A OK?');},function(){dmU(0x55555555);},function(){dmU(0xFFFFFFFF);oeU(80);},function(){dmU(0);oeU(0);},
+    function(){var i=g('sndico'),s=g('sndst');if(i)i.className='sndico on';if(s)s.textContent='BIP ACTIF';addLog('[WARN] NE555 D43 bip');setTimeout(function(){if(i)i.className='sndico';if(s)s.textContent='Silence';},400);},
+    function(){var d=g('ldcau'),b=g('box-cau');if(d)d.className='ldot cau';if(b)b.className='mcb cau-on';addLog('[INPUT] BTN MASTER_CAUTION PRESSE');},
+    function(){var d=g('ldalm'),b=g('box-alm');if(d)d.className='ldot alm';if(b)b.className='mcb alm-on';addLog('[INPUT] BTN MASTER_ALARM ACTIVE');},
+    function(){ind('ifa','hi');encU('f',3,'CW',false);addLog('[OK]   Encodeur FMS OK');},
+    function(){S.bc.f=1;btnU('f',true,1);addLog('[INPUT] BTN FPL PRESSE');},
+    function(){setTimeout(function(){btnU('f',false,1);},200);setPhase('✓ PASSE');addLog('[OK]   TOUS PASSES');},
+    function(){clearInterval(S.dt);S.dt=null;g('dot').className='dot';g('stxt').textContent='Démo terminée';},
+  ];
+  S.dt=setInterval(function(){if(step<seq.length){seq[step]();step++;}else{clearInterval(S.dt);S.dt=null;}},650);
+}
+
+function expLog(){var l=Array.from(document.querySelectorAll('#lo div')).map(function(d){return d.textContent;}).join('\n');var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([l],{type:'text/plain'}));a.download='knov_'+new Date().toISOString().slice(0,19).replace(/:/g,'-')+'.txt';a.click();}
+
+/* Init */
+function init(){
+  ['ll','lg'].forEach(function(id){var c=g(id);if(!c)return;c.innerHTML='';for(var i=0;i<9;i++){var d=document.createElement('div');d.className='lc';d.id=id+i;d.textContent=i;c.appendChild(d);}});
+  var dg=g('dmg');if(dg){dg.innerHTML='';for(var i=0;i<32;i++){var d=document.createElement('div');d.className='dc';d.id='dm'+i;d.textContent=i<10?i:'';dg.appendChild(d);}}
+  var cg=g('cg');if(cg){cg.innerHTML='';for(var i=0;i<32;i++){var d=document.createElement('div');d.className='ct';d.id='ch'+i;d.textContent=i<10?i:String.fromCharCode(55+i);(function(ii){d.onclick=function(){togCh(ii);};})(i);cg.appendChild(d);}}
+  ['ml','mg'].forEach(function(id){var c=g(id);if(!c)return;c.innerHTML='';for(var i=0;i<9;i++){var d=document.createElement('div');d.className='mc';d.id=id+i;d.textContent=i;c.appendChild(d);}});
+  var lb=g('lbs');if(lb){lb.innerHTML='';LLBL.forEach(function(lbl,i){var b=document.createElement('button');b.className='qb'+(i===4?' ac':'');b.textContent=lbl;(function(ii){b.onclick=function(){sL(ii);};})(i);lb.appendChild(b);});}
+  var gb2=g('gbs');if(gb2){gb2.innerHTML='';GLBL.forEach(function(lbl,i){var b=document.createElement('button');b.className='qb'+(i===4?' ac':'');b.textContent=lbl;(function(ii){b.onclick=function(){sG(ii);};})(i);gb2.appendChild(b);});}
+  sL(4);sG(4);
+  addLog('[INFO] Prêt v1.0.11 — WebSerial: '+('serial' in navigator?'OUI (Chrome/Edge)':'NON'));
+}
+init();
+</script>
+</body>
+</html>
