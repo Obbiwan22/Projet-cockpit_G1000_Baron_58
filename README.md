@@ -65,6 +65,20 @@ Les boutons **Master Alarm** (SW8, GPIO36 = switch / GPIO37 = LED) et **Master C
 
 > ⚠️ Il n'existe pas de config MobiFlight universelle pour ces deux boutons : à chaque changement d'appareil, vérifier/adapter la variable source dans MobiFlight, sinon les LEDs Master Alarm/Caution restent inertes malgré l'appui physique.
 
+## Boîtier — fabrication en impression 3D
+
+Le boîtier a été entièrement réalisé en impression 3D, sur une imprimante **Creality K2 Pro** (extrudeur direct drive).
+
+**Filament** : PLA pour l'ensemble des pièces structurelles. Le PETG convient également (meilleure tenue mécanique et thermique), mais demande un réglage plus fin.
+
+**Pièces vitrées (PETG transparent)** : certaines pièces nécessitant une transparence optique — pour laisser passer la lumière du rétroéclairage — ont été imprimées en PETG transparent :
+- Plaque avant (lettrage)
+- Touches fond
+- Cales touches
+- Glace LOC/GLIDE (fenêtre de la barre LED ILS)
+
+⚠️ **Contrainte d'impression** : l'impression en PETG transparent ne peut se faire qu'à **vitesse très lente**. Une vitesse standard donne un rendu opaque/laiteux qui casse l'effet de transparence recherché pour la diffusion de la lumière.
+
 ## Documentation
 
 📄 **[Rapport technique complet](docs/)** (français et anglais) — électronique, firmware, configuration MobiFlight, dépannage
