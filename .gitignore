@@ -31,5 +31,9 @@ desktop.ini
 # *.drl
 # *.zip
 
+Video/
+*.mp4
+*.mkv
+
 ## Web Serial tool (garder le HTML, ignorer d'éventuels node_modules si ajoutés plus tard)
 node_modules/

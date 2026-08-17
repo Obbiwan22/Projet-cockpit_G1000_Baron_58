@@ -12,6 +12,11 @@ Adepte de Flight Simulator, je voulais accéder facilement aux commandes du G100
 
 Le morceau qui a demandé le plus de travail — la barre ILS — a nécessité plusieurs refontes du firmware avant d'obtenir un comportement fiable en vol. Le détail complet de cette investigation est dans le rapport technique (voir plus bas), pour ceux que ça intéresse.
 
+## Démonstration vidéo
+
+- 🎥 [Démonstration 1](https://www.youtube.com/watch?v=X_OnPQQrdoY)
+- 🎥 [Démonstration 2](https://www.youtube.com/watch?v=7gS3sEIO30M)
+
 ## Ce que contient la carte
 
 | Fonction | Détail |
@@ -101,7 +106,7 @@ Le boîtier a été entièrement réalisé en impression 3D, sur une imprimante 
 
 ## Remerciements
 
-Je ne suis ni électronicien ni programmeur émérite — juste un passionné. Je me suis fait aider dans ce projet pour les parties electroniques et logiciel par Claude (l'IA d'Anthropic), notamment pour déboguer méthodiquement les comportements les plus tordus rencontrés en cours de route. 
+Je ne suis ni électronicien, ni programmeur émérite — juste un passionné de MSFS. Je me suis fait aider dans ce projet pour les parties electroniques et logiciel par Claude (l'IA d'Anthropic), notamment pour déboguer méthodiquement les comportements les plus tordus rencontrés en cours de route. 
 
 ## Licence
 
