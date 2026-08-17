@@ -48,6 +48,23 @@ La solution finale retenue : séparer strictement la réception/mémorisation de
 
 Le détail complet — schémas de câblage, historique des 5 itérations de diagnostic, configuration MobiFlight pas à pas, table de dépannage — est dans le rapport technique.
 
+## Boutons Master Caution / Master Warning — configuration MobiFlight spécifique par appareil
+
+Les boutons **Master Alarm** (SW8, GPIO36 = switch / GPIO37 = LED) et **Master Caution** (SW7, GPIO38 = switch / GPIO39 = LED) sont pilotés matériellement de façon identique pour tous les avions (mêmes GPIO, même buzzer NE555 sur GPIO43). En revanche, **la variable simulateur qui déclenche l'allumage côté MobiFlight change d'un appareil à l'autre** : chaque avion MSFS expose ses propres SimVars / L:Vars pour l'alarme et la caution (nom, type, seuil de déclenchement), donc la config MobiFlight (Config-item / preset) doit être recréée ou adaptée à chaque changement d'appareil piloté par le panneau.
+
+| Appareil | SimVar / L:Var utilisée | Type de config MobiFlight | Remarques |
+|---|---|---|---|
+| Beechcraft Baron 58 | *(à compléter)* | *(Preset / Custom Code)* | |
+| DA62 | *(à compléter)* | | |
+| DA40-NG | *(à compléter)* | | |
+| DA40 TDI | *(à compléter)* | | |
+| TBM 930 | *TBM 930* |MASTER_CAUTION_YELLOW_LED | |
+| C208B | *(à compléter)* | | |
+
+**Point d'attention** : contrairement aux SimVars natives disponibles sur certains appareils, plusieurs avions tiers n'exposent l'alarme/caution que via des **L:Vars propres à leur addon**, à retrouver dans la documentation du développeur ou via le débogueur de variables MobiFlight/FSUIPC (WASM) avant de pouvoir créer le Config-item.
+
+> ⚠️ Il n'existe pas de config MobiFlight universelle pour ces deux boutons : à chaque changement d'appareil, vérifier/adapter la variable source dans MobiFlight, sinon les LEDs Master Alarm/Caution restent inertes malgré l'appui physique.
+
 ## Documentation
 
 📄 **[Rapport technique complet](docs/)** (français et anglais) — électronique, firmware, configuration MobiFlight, dépannage

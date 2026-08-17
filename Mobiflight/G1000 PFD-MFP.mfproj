@@ -1,0 +1,1434 @@
+{
+  "Name": "G1000 PFD/MFD",
+  "ConfigFiles": [
+    {
+      "Label": "G1000_MFP",
+      "ReferenceOnly": false,
+      "EmbedContent": true,
+      "ConfigItems": [
+        {
+          "encoder": {
+            "onLeft": {
+              "Command": "(>H:AS1000_MFD_BARO_DEC)",
+              "PresetId": "f9381a22-ac4d-410b-bd4c-ba8e56aaafbc",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "onRight": {
+              "Command": "(>H:AS1000_MFD_BARO_INC)",
+              "PresetId": "49195be9-d088-4c7f-a569-ef2332746427",
+              "Type": "MSFS2020CustomInputAction"
+            }
+          },
+          "Device": {
+            "Type": "Encoder",
+            "Name": "BARO"
+          },
+          "GUID": "ee911656-fc93-4e54-949d-78c882bdd1b4",
+          "Active": true,
+          "Name": "Baro",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "encoder": {
+            "onLeft": {
+              "Command": "(>H:AS1000_MFD_CRS_DEC)",
+              "PresetId": "3675e7fa-3a4a-4aec-a122-9cf3718d0159",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "onRight": {
+              "Command": "(>H:AS1000_MFD_CRS_INC)",
+              "PresetId": "5d13396a-f175-45bb-89a4-5173f7000ca6",
+              "Type": "MSFS2020CustomInputAction"
+            }
+          },
+          "Device": {
+            "Type": "Encoder",
+            "Name": "CRS"
+          },
+          "GUID": "47d54397-7106-4690-a07b-135473eabe3d",
+          "Active": true,
+          "Name": "CRS",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "encoder": {
+            "onLeft": {
+              "Command": "(>H:AS1000_MFD_RANGE_DEC)",
+              "PresetId": "a3c8d8e0-e6a5-4c19-9b3e-31178dfa2ebb",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "onRight": {
+              "Command": "(>H:AS1000_MFD_RANGE_INC)",
+              "PresetId": "fdcb4bc4-96ee-4fa8-8514-ae2d00c14336",
+              "Type": "MSFS2020CustomInputAction"
+            }
+          },
+          "Device": {
+            "Type": "Encoder",
+            "Name": "RANGE"
+          },
+          "GUID": "df2317e8-1394-4c14-84a6-d484c43d31f4",
+          "Active": true,
+          "Name": "Range",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "encoder": {
+            "onLeft": {
+              "Command": "(>H:AS1000_MFD_FMS_Upper_DEC)",
+              "PresetId": "0e1e89fe-18a6-4010-9f89-ddf36e4de3d7",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "onRight": {
+              "Command": "(>H:AS1000_MFD_FMS_Upper_INC)",
+              "PresetId": "d02f496e-3b5a-427a-8300-cd21c97ffe6c",
+              "Type": "MSFS2020CustomInputAction"
+            }
+          },
+          "Device": {
+            "Type": "Encoder",
+            "Name": "FMS-I"
+          },
+          "GUID": "2a03203f-28ce-4d5d-8445-050f25da11d2",
+          "Active": true,
+          "Name": "FMS Inner",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "encoder": {
+            "onLeft": {
+              "Command": "(>H:AS1000_MFD_FMS_Lower_DEC)",
+              "PresetId": "c9198ce0-3aa6-4a54-a646-d9489ebd2878",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "onRight": {
+              "Command": "(>H:AS1000_MFD_FMS_Lower_INC)",
+              "PresetId": "a144a51b-d9ed-4421-8eb5-e8048e61f827",
+              "Type": "MSFS2020CustomInputAction"
+            }
+          },
+          "Device": {
+            "Type": "Encoder",
+            "Name": "FMS-O"
+          },
+          "GUID": "0a1ddf83-11fe-4ca2-9026-f21923a4e1f0",
+          "Active": true,
+          "Name": "FMS Outder",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_FMS_Upper_PUSH)",
+              "PresetId": "ae9a71a4-9199-47c0-8380-fbd6273a8140",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "Push-FMS"
+          },
+          "GUID": "88b87116-5651-4e6a-93c5-3b9d7861d5fd",
+          "Active": true,
+          "Name": "FMS Push",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_CRS_PUSH)",
+              "PresetId": "a4c88ce6-2c41-4de4-8d7f-5370fc94044c",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "Push_CRS-BARO"
+          },
+          "GUID": "30e7b760-b596-4cac-915a-062cc956de44",
+          "Active": true,
+          "Name": "CRS/Baro Push",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_JOYSTICK_UP)",
+              "PresetId": "4e3a63d2-2ad5-4b1d-a3a3-48d040fbdc6c",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PAN-A"
+          },
+          "GUID": "e56ccf86-7e70-4c94-8453-787cb7729b6e",
+          "Active": true,
+          "Name": "PAN-A",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_JOYSTICK_LEFT)",
+              "PresetId": "b7e4f454-30d8-45e3-ae21-aa745f9c0aa8",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PAN-B"
+          },
+          "GUID": "6d2a8779-b137-479e-91a3-de83bf248644",
+          "Active": true,
+          "Name": "PAN-B",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_JOYSTICK_RIGHT)",
+              "PresetId": "ef21f306-2f23-486f-807b-17a7cfdbff4a",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PAN-C"
+          },
+          "GUID": "ec39e01a-8793-4573-af05-6439b94e35b8",
+          "Active": true,
+          "Name": "PAN-C",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_JOYSTICK_UP)",
+              "PresetId": "4e3a63d2-2ad5-4b1d-a3a3-48d040fbdc6c",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PAN-D"
+          },
+          "GUID": "efdfae6d-b77d-4cf6-946d-e60db226614d",
+          "Active": true,
+          "Name": "Pan-D",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_JOYSTICK_PUSH)",
+              "PresetId": "3768bd5c-ee69-4ca7-a3f0-582c48c895d8",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PAN PUSH"
+          },
+          "GUID": "85336b03-7fdf-4855-aba4-7bacf8edec94",
+          "Active": true,
+          "Name": "PAN Push",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_CLR)",
+              "PresetId": "56c20d5a-439f-4403-abbe-ff721f494a7b",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "CLR"
+          },
+          "GUID": "ff737c78-d775-4f34-b98f-7f66891fead1",
+          "Active": true,
+          "Name": "CLR",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_DIRECTTO)",
+              "PresetId": "498f733a-6718-4228-88dd-747cf04271ee",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "DIR"
+          },
+          "GUID": "36c30e61-4679-4a90-a616-729f2b0be2d8",
+          "Active": true,
+          "Name": "DIR To",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_ENT_Push)",
+              "PresetId": "7c502237-ca70-44c9-ab79-8fa34b8d9bf5",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "ENT"
+          },
+          "GUID": "9b16a085-2c57-40c4-b266-b8395f9e9318",
+          "Active": true,
+          "Name": "ENT",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_FPL_Push)",
+              "PresetId": "907761d1-2789-4b4d-999a-794d0da1844e",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "FPL"
+          },
+          "GUID": "949a023c-a9de-4dd0-9c0d-bd9b741c1842",
+          "Active": true,
+          "Name": "FPL",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_MENU_Push)",
+              "PresetId": "59759a87-3b2b-4380-8481-bdf83d56d196",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "MENU"
+          },
+          "GUID": "e16448e2-ec61-4ddb-ab67-9374d2777dbf",
+          "Active": true,
+          "Name": "Menu",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_MFD_PROC_Push)",
+              "PresetId": "0552f93e-9252-49be-b4f4-429d43a47879",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PROC"
+          },
+          "GUID": "d02a87fc-8fb5-473a-bc39-e483c18c981e",
+          "Active": true,
+          "Name": "Proc",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_MFP",
+            "Serial": "SN-536-893"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "G1000_PFD",
+      "ReferenceOnly": false,
+      "EmbedContent": true,
+      "ConfigItems": [
+        {
+          "encoder": {
+            "onLeft": {
+              "Command": "(>H:AS1000_PFD_BARO_DEC)",
+              "PresetId": "a1ad8c39-49b1-4cc8-85e7-6bbcdceeb29a",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "onRight": {
+              "Command": "(>H:AS1000_PFD_BARO_INC)",
+              "PresetId": "68104834-399d-4b74-a542-f7c4d7d81918",
+              "Type": "MSFS2020CustomInputAction"
+            }
+          },
+          "Device": {
+            "Type": "Encoder",
+            "Name": "BARO"
+          },
+          "GUID": "ad10158b-5361-4d12-be01-f4b360bd35dc",
+          "Active": true,
+          "Name": "BARO",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "encoder": {
+            "onLeft": {
+              "Command": "(>H:AS1000_PFD_CRS_DEC)",
+              "PresetId": "5e79e34d-0346-447a-9f07-ce69d65d9a36",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "onRight": {
+              "Command": "(>H:AS1000_PFD_CRS_INC)",
+              "PresetId": "3b8cdf53-086f-4c56-810b-ffb66099fa43",
+              "Type": "MSFS2020CustomInputAction"
+            }
+          },
+          "Device": {
+            "Type": "Encoder",
+            "Name": "CRS"
+          },
+          "GUID": "0bcaea38-7c28-4800-bbf9-8ccaaeff958b",
+          "Active": true,
+          "Name": "CRS",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_DIRECTTO)",
+              "PresetId": "2766a15c-f7a6-4a7e-ae54-8a3f35ea5047",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "DIR"
+          },
+          "GUID": "71950a0f-4ede-4a4f-b45a-948305cccebd",
+          "Active": true,
+          "Name": "DIR",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_FPL_Push)",
+              "PresetId": "22812c0c-f2f4-419c-b12c-0d5889752463",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "FPL"
+          },
+          "GUID": "9a97d166-2798-479c-91c7-998cc639ea82",
+          "Active": true,
+          "Name": "FPL",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_CLR)",
+              "PresetId": "dc6ffbf7-9ead-421c-850c-b3ac8198041f",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "CLR"
+          },
+          "GUID": "c3f128a1-3ecc-4f4e-939c-9d5840d4cb8f",
+          "Active": true,
+          "Name": "CLR",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_MENU_Push)",
+              "PresetId": "3824ae98-519c-40ef-b083-bf1d9fd3d451",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "MENU"
+          },
+          "GUID": "859ad677-ad86-4943-806d-66b90d2298c3",
+          "Active": true,
+          "Name": "Menu",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_PROC_Push)",
+              "PresetId": "cdeef2be-8be8-440f-91d8-d138f238fdc6",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PROC"
+          },
+          "GUID": "ed3d13d8-6cc5-4abe-8604-e39fa3a1c28e",
+          "Active": true,
+          "Name": "PROC",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_ENT_Push)",
+              "PresetId": "361208b1-4161-4752-9c65-8146fa5cb14d",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "ENT"
+          },
+          "GUID": "8c949a04-9103-4e51-9b3b-d873e2adcf81",
+          "Active": true,
+          "Name": "ENT",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "encoder": {
+            "onLeft": {
+              "Command": "(>H:AS1000_PFD_FMS_Lower_DEC)",
+              "PresetId": "22c0671b-e21b-4dad-a552-b0d410f88f70",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "onRight": {
+              "Command": "(>H:AS1000_PFD_FMS_Lower_INC)",
+              "PresetId": "a7e26b80-418a-4200-b576-28b50741d3e3",
+              "Type": "MSFS2020CustomInputAction"
+            }
+          },
+          "Device": {
+            "Type": "Encoder",
+            "Name": "FMS-I"
+          },
+          "GUID": "25095f83-9d11-4fc5-96db-f73b4d711f7d",
+          "Active": true,
+          "Name": "FMS LOWER",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "encoder": {
+            "onLeft": {
+              "Command": "(>H:AS1000_PFD_FMS_Upper_DEC)",
+              "PresetId": "38c75d3c-023b-49c9-810c-cd429107c321",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "onRight": {
+              "Command": "(>H:AS1000_PFD_FMS_Upper_INC)",
+              "PresetId": "e6fa50a6-17d7-491b-8c8f-a035410ae388",
+              "Type": "MSFS2020CustomInputAction"
+            }
+          },
+          "Device": {
+            "Type": "Encoder",
+            "Name": "FMS-O"
+          },
+          "GUID": "322898c7-c0a2-4f02-9845-15ee4a7d045a",
+          "Active": true,
+          "Name": "FMS Upper",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_FMS_Upper_PUSH)",
+              "PresetId": "fc706663-24cf-4350-a9b7-35e4e1c6b7f8",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "Push-FMS"
+          },
+          "GUID": "be962d3d-0b7e-439a-9ed2-610ca0a3e1a5",
+          "Active": true,
+          "Name": "FMS_PUSH",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_JOYSTICK_UP)",
+              "PresetId": "6bb40234-5525-42f8-aef3-52ddb7336e29",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PAN-A"
+          },
+          "GUID": "fd724006-fa37-4512-be48-c7dc0fa6d6ed",
+          "Active": true,
+          "Name": "PAN-UP-A",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_JOYSTICK_LEFT)",
+              "PresetId": "16f31eee-612c-410f-9825-e15ee959e268",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PAN-B"
+          },
+          "GUID": "7f794549-1de8-4e87-be22-14e94ad2046f",
+          "Active": true,
+          "Name": "PAN-LEFT-B",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_JOYSTICK_RIGHT)",
+              "PresetId": "ade27413-b399-467b-bdb1-f9dc8ef2e6c8",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PAN-C"
+          },
+          "GUID": "5f0a4b10-8654-491c-a83b-0a3e25aa3049",
+          "Active": true,
+          "Name": "PAN-RIGHT-C",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_JOYSTICK_DOWN)",
+              "PresetId": "5f72fc77-8c85-480b-86b5-eebfcdbcb759",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PAN-D"
+          },
+          "GUID": "dfc0b8ca-5c35-456d-8ee9-dc2c6f37da3a",
+          "Active": true,
+          "Name": "PAN-DOWN-D",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "button": {
+            "onPress": {
+              "Command": "(>H:AS1000_PFD_JOYSTICK_PUSH)",
+              "PresetId": "8fb0272e-584c-4fdb-8ac1-b853124768bf",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "PAN PUSH"
+          },
+          "GUID": "2465457f-d79e-4ee3-87c0-4ae9dfec40da",
+          "Active": true,
+          "Name": "PAN-PUSH",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "encoder": {
+            "onLeft": {
+              "Command": "(>H:AS1000_PFD_RANGE_DEC)",
+              "PresetId": "f5754549-83b4-4a1b-9ef6-21fe444ceece",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "onLeftFast": {
+              "Command": "(>H:AS1000_PFD_RANGE_INC)",
+              "PresetId": "a209be51-8652-4265-bf3c-2863b5b282b3",
+              "Type": "MSFS2020CustomInputAction"
+            }
+          },
+          "Device": {
+            "Type": "Encoder",
+            "Name": "RANGE"
+          },
+          "GUID": "0e7cf270-213a-4d58-9be8-4af45977d045",
+          "Active": true,
+          "Name": "RANGE",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "Source": {
+            "SimConnectValue": {
+              "UUID": "1c616b6d-2dd7-42e1-a0dd-9c51774d023f",
+              "Value": "(A:NAV CDI:1,Number)",
+              "VarType": 2
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 0.0
+          },
+          "Device": {
+            "Name": "ILS NeoPixel Meg",
+            "CustomName": "ILS NeoPixel Meg",
+            "MessageType": 0,
+            "Value": "messageID0",
+            "Type": "CustomDevice"
+          },
+          "DeviceType": "CustomDevice",
+          "DeviceName": "ILS NeoPixel Meg",
+          "GUID": "c8ad6add-c52b-4733-8019-69dd2ba2439e",
+          "Active": true,
+          "Name": "ILS LOC",
+          "Type": "OutputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          },
+          "Preconditions": [
+            {
+              "Type": "config",
+              "Ref": "33499c3b-0d15-43ca-8dc8-9a920489c134",
+              "Operand": "=",
+              "Value": "1",
+              "Logic": "and",
+              "Active": true
+            }
+          ],
+          "Modifiers": {
+            "Items": [
+              {
+                "Type": "Transformation",
+                "Expression": "Floor(($+127)/254*8+0.5)",
+                "Active": true
+              }
+            ]
+          }
+        },
+        {
+          "Source": {
+            "SimConnectValue": {
+              "UUID": "9449dbd5-7e28-4029-ac30-c7c074c82adf",
+              "Value": "(A:NAV GLIDE SLOPE ERROR:1,Degrees)",
+              "VarType": 2
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 4.0
+          },
+          "Device": {
+            "Name": "ILS NeoPixel Meg",
+            "CustomName": "ILS NeoPixel Meg",
+            "MessageType": 1,
+            "Value": "messageID1",
+            "Type": "CustomDevice"
+          },
+          "DeviceType": "CustomDevice",
+          "DeviceName": "ILS NeoPixel Meg",
+          "GUID": "26e5b287-52a6-4ac0-92ed-aea3597b64a2",
+          "Active": true,
+          "Name": "ILS Glide",
+          "Type": "OutputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          },
+          "Preconditions": [
+            {
+              "Type": "config",
+              "Ref": "33499c3b-0d15-43ca-8dc8-9a920489c134",
+              "Operand": "=",
+              "Value": "1",
+              "Logic": "and",
+              "Active": true
+            }
+          ],
+          "Modifiers": {
+            "Items": [
+              {
+                "Type": "Transformation",
+                "Expression": "Floor((($*-1)+1)/2*8+0.5)",
+                "Active": true
+              }
+            ]
+          }
+        },
+        {
+          "Source": {
+            "SimConnectValue": {
+              "UUID": "bae9be66-3e33-405e-a66f-0fe7f000ea1f",
+              "Value": "(A:NAV HAS GLIDE SLOPE:1,Bool)",
+              "VarType": 2
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 1.0
+          },
+          "Device": {
+            "Name": "ILS NeoPixel Meg",
+            "CustomName": "ILS NeoPixel Meg",
+            "MessageType": 3,
+            "Value": "$",
+            "Type": "CustomDevice"
+          },
+          "DeviceType": "CustomDevice",
+          "DeviceName": "ILS NeoPixel Meg",
+          "GUID": "45833ea7-d13d-4642-a315-de6ec6d76ed5",
+          "Active": true,
+          "Name": "ILS ACTIVE OUT",
+          "Type": "OutputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "CAUTION",
+      "ReferenceOnly": false,
+      "EmbedContent": true,
+      "ConfigItems": [
+        {
+          "button": {
+            "onPress": {
+              "Variable": {
+                "TYPE": "number",
+                "Name": "ACTIVE_CAUTION",
+                "Expression": "0"
+              },
+              "Type": "VariableInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "Push Caution"
+          },
+          "GUID": "ec1b0605-8d94-4f1c-9ae2-5cd9202f9198",
+          "Active": true,
+          "Name": "Push Caution",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "Source": {
+            "MobiFlightVariable": {
+              "TYPE": "number",
+              "Name": "ACTIVE_CAUTION",
+              "Expression": "$"
+            },
+            "Type": "VariableSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 1.0
+          },
+          "Device": {
+            "Name": "LED_Caution",
+            "Pin": "LED_Caution",
+            "Brightness": 255,
+            "PwmMode": false,
+            "Type": "Output"
+          },
+          "DeviceType": "Output",
+          "DeviceName": "LED_Caution",
+          "GUID": "b272998e-ff3c-4c33-b75e-48b0bd044c4b",
+          "Active": true,
+          "Name": "LED_CAUTION",
+          "Type": "OutputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          },
+          "Modifiers": {
+            "Items": [
+              {
+                "Type": "Transformation",
+                "Expression": "$",
+                "Active": true
+              }
+            ]
+          }
+        },
+        {
+          "Source": {
+            "SimConnectValue": {
+              "UUID": "52651173-1aec-4cbd-a4dd-deacb0216dd5",
+              "Value": "(A:STALL WARNING,Bool)",
+              "VarType": 2
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 1.0
+          },
+          "ButtonInputConfig": {
+            "onPress": {
+              "Variable": {
+                "TYPE": "number",
+                "Name": "ACTIVE_CAUTION",
+                "Expression": "1"
+              },
+              "Type": "VariableInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "DeviceType": "InputAction",
+          "GUID": "d7d723f9-da79-4d92-9336-b01a1f636ed1",
+          "Active": true,
+          "Name": "STALL_WARNING",
+          "Type": "OutputConfigItem"
+        },
+        {
+          "Source": {
+            "SimConnectValue": {
+              "UUID": "51da03a2-9e3b-434c-8bfa-dd704363bcb9",
+              "Value": "(L:Generic_Master_Caution_Active)",
+              "VarType": 2
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 1.0
+          },
+          "ButtonInputConfig": {
+            "onPress": {
+              "Variable": {
+                "TYPE": "number",
+                "Name": "ACTIVE_CAUTION",
+                "Expression": "1"
+              },
+              "Type": "VariableInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "DeviceType": "InputAction",
+          "GUID": "c8e22e97-aedf-4ddd-b13d-b7760f58037f",
+          "Active": true,
+          "Name": "Master Caution",
+          "Type": "OutputConfigItem"
+        },
+        {
+          "Source": {
+            "SimConnectValue": {
+              "UUID": "f9b5c39f-fab1-4991-b2fc-eca2f1c9a083",
+              "Value": "(A:AUTOPILOT DISENGAGED,Bool)",
+              "VarType": 2
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 1.0
+          },
+          "ButtonInputConfig": {
+            "onPress": {
+              "Variable": {
+                "TYPE": "number",
+                "Name": "ACTIVE_CAUTION",
+                "Expression": "1"
+              },
+              "Type": "VariableInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "DeviceType": "InputAction",
+          "GUID": "7c082d72-8681-4756-ad52-018d75410a72",
+          "Active": true,
+          "Name": "AUTOPILOT DISENGAGE",
+          "Type": "OutputConfigItem"
+        },
+        {
+          "Source": {
+            "SimConnectValue": {
+              "UUID": "-",
+              "Value": "",
+              "VarType": 2
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 1.0
+          },
+          "ButtonInputConfig": {
+            "onPress": {
+              "Variable": {
+                "TYPE": "number",
+                "Name": "ACTIVE_CAUTION",
+                "Expression": "1"
+              },
+              "Type": "VariableInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "DeviceType": "InputAction",
+          "GUID": "70c3f8fc-7fa8-4e29-a1da-088386388c27",
+          "Active": false,
+          "Name": "New Output Config",
+          "Type": "OutputConfigItem"
+        }
+      ]
+    },
+    {
+      "Label": "ALARM",
+      "ReferenceOnly": false,
+      "EmbedContent": true,
+      "ConfigItems": [
+        {
+          "button": {
+            "onPress": {
+              "Variable": {
+                "TYPE": "number",
+                "Name": "ACTIVE_WARNING",
+                "Expression": "0"
+              },
+              "Type": "VariableInputAction"
+            },
+            "onRelease": {
+              "Command": "2 (>L:var_masterCautionLatching)",
+              "PresetId": "51653339-5c46-440e-b60a-afec2d8694a0",
+              "Type": "MSFS2020CustomInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "Device": {
+            "Type": "Button",
+            "Name": "Push Alarm"
+          },
+          "GUID": "cbc5af0a-9043-4bb5-93d6-6ba8a9476a42",
+          "Active": true,
+          "Name": "PUSH ALARM",
+          "Type": "InputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          }
+        },
+        {
+          "Source": {
+            "MobiFlightVariable": {
+              "TYPE": "number",
+              "Name": "ACTIVE_WARNING",
+              "Expression": "$"
+            },
+            "Type": "VariableSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 0.0
+          },
+          "Device": {
+            "Name": "Led Alarm",
+            "Pin": "Led Alarm",
+            "Brightness": 255,
+            "PwmMode": false,
+            "Type": "Output"
+          },
+          "DeviceType": "Output",
+          "DeviceName": "Led Alarm",
+          "GUID": "1bb6d68a-fc11-44e7-aa61-e6e3727933c5",
+          "Active": true,
+          "Name": "LED-ALARM",
+          "Type": "OutputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          },
+          "Modifiers": {
+            "Items": [
+              {
+                "Type": "Transformation",
+                "Expression": "$",
+                "Active": true
+              }
+            ]
+          }
+        },
+        {
+          "Source": {
+            "SimConnectValue": {
+              "UUID": "1bd1f480-1004-4a3c-b352-3439d913ac99",
+              "Value": "(L:Generic_Master_Warning_Active)",
+              "VarType": 2
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 1.0
+          },
+          "ButtonInputConfig": {
+            "onPress": {
+              "Variable": {
+                "TYPE": "number",
+                "Name": "ACTIVE_WARNING",
+                "Expression": "1"
+              },
+              "Type": "VariableInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "DeviceType": "InputAction",
+          "GUID": "81a0e297-dead-447f-9ad3-ab8f1f4093ea",
+          "Active": true,
+          "Name": "MASTER_WARNING_RED",
+          "Type": "OutputConfigItem"
+        },
+        {
+          "Source": {
+            "SimConnectValue": {
+              "UUID": "d31f38c8-5592-4200-afdd-443871284697",
+              "Value": "(L:var_GSA_EngineFire_L_EM_readonly, bool)",
+              "VarType": 2
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 1.0
+          },
+          "ButtonInputConfig": {
+            "onPress": {
+              "Variable": {
+                "TYPE": "number",
+                "Name": "ACTIVE_WARNING",
+                "Expression": "1"
+              },
+              "Type": "VariableInputAction"
+            },
+            "LongReleaseDelay": 350,
+            "HoldDelay": 350,
+            "RepeatDelay": 0
+          },
+          "DeviceType": "InputAction",
+          "GUID": "f8ab9df0-ca4c-4a06-a066-b99d44cf9df5",
+          "Active": true,
+          "Name": "ENG FIRE",
+          "Type": "OutputConfigItem"
+        },
+        {
+          "Source": {
+            "SimConnectValue": {
+              "VarType": 0
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 1.0
+          },
+          "GUID": "b65a67b7-28b2-43e8-992e-156495502ae1",
+          "Active": true,
+          "Name": "New Output Config",
+          "Type": "OutputConfigItem"
+        }
+      ]
+    },
+    {
+      "Label": "Light",
+      "ReferenceOnly": false,
+      "EmbedContent": true,
+      "ConfigItems": [
+        {
+          "Source": {
+            "SimConnectValue": {
+              "UUID": "90dad9d8-ecf7-4ea0-9b3c-255918612523",
+              "Value": "(L:LIGHTING_PANEL_1)",
+              "VarType": 2
+            },
+            "Type": "SimConnectSource"
+          },
+          "TestValue": {
+            "type": 1,
+            "Float64": 100.0
+          },
+          "Device": {
+            "Name": "ILS NeoPixel Meg",
+            "CustomName": "ILS NeoPixel Meg",
+            "MessageType": 2,
+            "Value": "$",
+            "Type": "CustomDevice"
+          },
+          "DeviceType": "CustomDevice",
+          "DeviceName": "ILS NeoPixel Meg",
+          "GUID": "684544bc-4412-419f-ab71-e285599d691c",
+          "Active": true,
+          "Name": "Rétro-eclairage LIGHT POTENTIOMETER:3",
+          "Type": "OutputConfigItem",
+          "Controller": {
+            "Name": "G1000_PFD",
+            "Serial": "SN-948-D10"
+          },
+          "Modifiers": {
+            "Items": [
+              {
+                "Type": "Transformation",
+                "Expression": "Floor($ / 100 * 255)",
+                "Active": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "Sim": "msfs",
+  "Aircraft": [
+    {
+      "Name": "TBM 930",
+      "Vendor": "Microsoft"
+    },
+    {
+      "Name": "TBM 930 (2024)",
+      "Vendor": "Microsoft"
+    }
+  ],
+  "Features": {
+    "FSUIPC": false,
+    "ProSim": false
+  },
+  "_version": "0.10"
+}
