@@ -1,6 +1,6 @@
 # G1000 Baron 58 — Cockpit Panel (COMMANDE G1000)
 
-Panneau de commande physique pour le G1000 du Beechcraft Baron 58 sous Microsoft Flight Simulator 2024, piloté par un Arduino Mega 2560 Pro Mini via MobiFlight.
+Panneau de commande physique pour le G1000 du Beechcraft Baron 58 sous Microsoft Flight Simulator 2024/2020, piloté par un Arduino Mega 2560 Pro Mini via MobiFlight.
 
 ![Statut](https://img.shields.io/badge/status-fonctionnel%20%E2%80%94%20valid%C3%A9%20en%20vol-brightgreen)
 ![Plateforme](https://img.shields.io/badge/plateforme-Arduino%20Mega%202560-blue)
