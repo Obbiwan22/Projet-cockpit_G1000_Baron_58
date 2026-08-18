@@ -35,11 +35,13 @@ Le morceau qui a demandé le plus de travail — la barre ILS — a nécessité 
 ## Structure du dépôt
 
 ```
-firmware/       Firmware Arduino (.ino/.h/.cpp) — module ILS + panneau complet
-mobiflight/      device.json, board.json — Custom Device MobiFlight
+firmware/       Firmware Arduino (.ino/.h/.cpp) — device.json, board.json — Custom Device MobiFlight
 schematics/      Schémas EasyEDA (carte CPU + carte COMMANDE G1000)
 docs/            Rapport technique complet (FR + EN), BOM, dépannage
 tools/           Programme de test matériel autonome + console de contrôle web
+Mobiflifht/      Profil Mobiflight mfproj, mfmc
+3D-Printing      Fichiers 3MF et STL
+img              Photos du projet
 ```
 ## Firmware — basé sur MobiFlight
 
